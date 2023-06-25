@@ -19,8 +19,6 @@ function syncDate() {
     hourHand.style.transform = `rotate(${hourAngle}deg)`;
     minuteHand.style.transform = `rotate(${minutesAngle}deg)`;
     secondHand.style.transform = `rotate(${secondsAngle}deg)`;
-    
-    // console.log(`Clock config: (${hourAngle}, ${minutesAngle}, ${secondsAngle})`);
 }
 
 syncDate();
