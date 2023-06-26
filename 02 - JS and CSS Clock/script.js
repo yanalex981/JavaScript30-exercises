@@ -41,7 +41,7 @@ function advanceHands() {
     const timeDiff = currentDate - prevDate;
     const seconds = timeDiff / 1000.0;
     setHoursAngle(getHoursAngle(currentDate.getHours(), currentDate.getMinutes()) + ANGLE_OFFSET);
-    setMinutesAngle(getMinutesAngle(getMinutesAngle(currentDate.getMinutes(), currentDate.getSeconds()) + ANGLE_OFFSET));
+    setMinutesAngle(getMinutesAngle(currentDate.getMinutes(), currentDate.getSeconds()) + ANGLE_OFFSET);
     secondsAngle += getSecondsAngle(seconds);
     setSecondsAngle(secondsAngle + ANGLE_OFFSET);
 }
