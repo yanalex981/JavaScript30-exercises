@@ -46,6 +46,8 @@ function advanceHands() {
     setSecondsAngle(secondsAngle + ANGLE_OFFSET);
 }
 
+advanceHands();
+
 setInterval(() => {
     advanceHands();
 }, 1000);
