@@ -23,9 +23,11 @@
 
   <style>
 
-    /*
-      misc styles, nothing to do with CSS variables
-    */
+    :root {
+      --spacing: 20px;
+      --blur: 10px;
+      --base-color: #ff9100;
+    }
 
     body {
       text-align: center;
@@ -43,9 +45,37 @@
     input {
       width: 100px;
     }
+
+    img {
+      padding: var(--spacing);
+      filter: blur(var(--blur));
+      background-color: var(--base-color);
+    }
+
+    .hl {
+      color: var(--base-color);
+    }
+
   </style>
 
   <script>
+    const root = document.querySelector(':root');
+
+    function spacingChanged(event) {
+      root.style.setProperty('--spacing', `${this.value}${this.dataset.sizing}`);
+    }
+
+    function blurChanged(event) {
+      root.style.setProperty('--blur', `${this.value}${this.dataset.sizing}`);
+    }
+
+    function baseColorChanged(event) {
+      root.style.setProperty('--base-color', `${this.value}`);
+    }
+
+    document.querySelector('#spacing').addEventListener('input', spacingChanged);
+    document.querySelector('#blur').addEventListener('input', blurChanged);
+    document.querySelector('#base').addEventListener('input', baseColorChanged);
   </script>
 
 </body>
