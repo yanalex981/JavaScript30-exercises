@@ -13,7 +13,7 @@ document.querySelector('.search').addEventListener('input',
 
         const N_MAX_RESULTS = 25
 
-        let filteredCities = cities
+        let results = cities
             .map(city => {
                 const matchesInCityName = city.city.match(queryRegex) || [];
                 const matchesInStateName = city.state.match(queryRegex) || [];
@@ -22,7 +22,8 @@ document.querySelector('.search').addEventListener('input',
                     cityName: city.city,
                     state: city.state,
                     population: city.population,
-                    relevance: matchesInCityName.concat(matchesInStateName).join('').length
+                    relevance: matchesInCityName.concat(matchesInStateName)
+                        .reduce((length, match) => length + match.length, 0)
                 }
             })
             .filter(city => city.relevance > 0)
@@ -32,17 +33,23 @@ document.querySelector('.search').addEventListener('input',
                 a.cityName.localeCompare(b.cityName))
             .slice(0, N_MAX_RESULTS);
 
-        console.log(filteredCities);
+        suggestions.innerHTML = '';
 
-        // suggestions.innerHTML = '';
+        if (query.length > 0) {
+            suggestions.innerHTML = results.map(result => {
+                const city = result.cityName.replace(queryRegex, `<span class="hl">$&</span>`);
+                const state = result.state.replace(queryRegex, `<span class="hl">$&</span>`);
+                const population = parseInt(result.population, 10).toLocaleString('en-US');
 
-        // if (query.length > 0) {
-        //     suggestions.innerHTML = filteredCities.map(city =>
-        //         `<li><span>${city.city.trim()}, ${city.state.trim()}</span><span>${city.population}</span></li>`.replace(query, `<span class='hl'>${query}</span>`)
-        //     ).join('');
-        // }
-        // else {
-        //     prompts.forEach((element, index, parent) => suggestions.appendChild(element));
-        // }
+                return `<li>
+                    <span class="name">${city}, ${state}</span>
+                    <span class="population">${population}</span>
+                </li>`;
+            })
+            .join('');
+        }
+        else {
+            prompts.forEach(element => suggestions.appendChild(element));
+        }
     }
 );
